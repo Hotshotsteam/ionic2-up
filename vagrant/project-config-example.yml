@@ -1,6 +1,9 @@
 # This is a reference for project-config.yml
 # You should version project-config.yml in your source control.
 
+# Disable box update checks.  Slightly speeds up provisioning.
+box_check_update: false
+
 # Names
 vm_name: myproject
 hostname: myproject

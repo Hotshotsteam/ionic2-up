@@ -8,11 +8,12 @@ B2D_VERSION="1.11.0"
 # Project configuration
 # To override update vagrant/project-config.yml
 project_config = {
-  'vm_name'       => false,
-  'hostname'      => false,
-  'forward_ports' => false,
-  'bootstrap'     => false,
-  'compose'       => false
+  'box_check_update' => true,
+  'vm_name'          => false,
+  'hostname'         => false,
+  'forward_ports'    => false,
+  'bootstrap'        => false,
+  'compose'          => false
 }
 
 # Load project config
@@ -25,15 +26,16 @@ end
 # Developer configuration
 # To override copy vagrant/developer-config-example.yml to vagrant/developer-config.yml
 dev_config = {
-  'vm_name'         => false,
-  'hostname'        => false,
-  'forward_ports'   => false,
-  'ssh_port'        => false,
-  'ram'             => 2048,
-  'cpus'            => 1,
-  'bridged_adapter' => false,
-  'bridged_ip'      => false,
-  'compose'         => false
+  'box_check_update' => true,
+  'vm_name'          => false,
+  'hostname'         => false,
+  'forward_ports'    => false,
+  'ssh_port'         => false,
+  'ram'              => 2048,
+  'cpus'             => 1,
+  'bridged_adapter'  => false,
+  'bridged_ip'       => false,
+  'compose'          => false
 }
 
 # Load developer config
@@ -49,6 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure box
   config.vm.box = B2D_BOX
   config.vm.box_version = B2D_VERSION
+  config.vm.box_check_update = project_config['box_check_update'] && dev_config['box_check_update']
 
   # Configure hostname
   hostname = dev_config['hostname'] || project_config['hostname']

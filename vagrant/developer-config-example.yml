@@ -1,6 +1,9 @@
 # Copy this file to developer-config.yml
 # You can simply remove settings that you don't need to override
 
+# Disable box update checks.  Slightly speeds up provisioning.
+box_check_update: false
+
 # Names
 vm_name: myproject
 hostname: myproject
