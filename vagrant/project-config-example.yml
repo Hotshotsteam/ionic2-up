@@ -3,6 +3,7 @@
 
 # Names
 vm_name: myproject
+hostname: myproject
 
 # Ports that your project uses to forward to the host by default.
 forward_ports:

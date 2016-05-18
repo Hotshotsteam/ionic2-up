@@ -8,6 +8,7 @@ B2D_VERSION="1.11.0"
 # Project configuration
 project_config = {
   'vm_name' => false,
+  'hostname' => false,
   'forward_ports' => false
 }
 # Load project config
@@ -22,6 +23,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure box
   config.vm.box = B2D_BOX
   config.vm.box_version = B2D_VERSION
+
+  # Configure hostname
+  if project_config['hostname']
+    config.vm.hostname = project_config['hostname']
+  end
 
   # Forwarding for SSH
   config.vm.network "forwarded_port", guest: 22, host: 22, auto_correct: true
