@@ -27,7 +27,8 @@ end
 dev_config = {
   'vm_name'       => false,
   'hostname'      => false,
-  'forward_ports' => false
+  'forward_ports' => false,
+  'ssh_port'      => false
 }
 
 # Load developer config
@@ -51,7 +52,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Forwarding for SSH
-  config.vm.network "forwarded_port", guest: 22, host: 22, auto_correct: true
+  if dev_config['ssh_port']
+    config.ssh.port = dev_config['ssh_port']
+    config.vm.network :forwarded_port, guest: 22, host: 2200, id: "ssh", disabled: "true"
+    config.vm.network :forwarded_port, guest: 22, host: dev_config['ssh_port']
+  end
 
   # Port forwarding
   forward_ports = {};

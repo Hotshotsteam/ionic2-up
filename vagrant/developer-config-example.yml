@@ -10,3 +10,7 @@ hostname: myproject
 forward_ports:
   80: 9080
   443: 9443
+
+# SSH Port
+# If this is not specified then Vagrant will resolve it for you
+ssh_port: 2222
