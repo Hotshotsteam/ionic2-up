@@ -1,0 +1,7 @@
+# This is a reference for project-config.yml
+# You should version project-config.yml in your source control.
+
+# Ports that your project uses to forward to the host by default.
+forward_ports:
+  80: 8080
+  443: 8443
