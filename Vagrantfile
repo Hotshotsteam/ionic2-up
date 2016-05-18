@@ -35,7 +35,8 @@ dev_config = {
   'cpus'             => 1,
   'bridged_adapter'  => false,
   'bridged_ip'       => false,
-  'compose'          => false
+  'bootstrap'        => false,
+  'compose'          => false,
 }
 
 # Load developer config
@@ -114,5 +115,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Optional project bootstrap
   if project_config['bootstrap']
     config.vm.provision :shell, :path => "#{project_config['bootstrap']}", name: "project"
+  end
+
+  # Optional dev bootstrap
+  if dev_config['bootstrap']
+    config.vm.provision :shell, :path => "#{dev_config['bootstrap']}", name: "developer"
   end
 end
