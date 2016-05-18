@@ -37,6 +37,7 @@ dev_config = {
   'bridged_ip'       => false,
   'bootstrap'        => false,
   'compose'          => false,
+  'insecure_key'     => false
 }
 
 # Load developer config
@@ -58,6 +59,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   hostname = dev_config['hostname'] || project_config['hostname']
   if hostname
     config.vm.hostname = hostname
+  end
+
+  # Allow insecure key
+  if dev_config['insecure_key']
+    config.ssh.insert_key = false
   end
 
   # Forwarding for SSH

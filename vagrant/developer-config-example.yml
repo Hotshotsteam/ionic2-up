@@ -28,9 +28,16 @@ cpus: 1
 bridged_adapter: "<name as shown in Virtualbox Manager>"
 bridged_ip: "192.168.1.50"
 
+# Run a shell script on boot
+bootstrap: vagrant/project.sh
+
 # Docker compose file to up on boot.  Should be relative to Vagrantfile.
 compose: ./dev-compose.yml
 
 # Set this to true if your compose file overrides the project.  If this 
 # is not set then both the project and dev compose files will be run.
 compose_replace: false
+
+# Disable key generation on vagrant up.  This allows you to use the
+# default vagrant key every time.  Consider your network security first.
+insecure_key: true
