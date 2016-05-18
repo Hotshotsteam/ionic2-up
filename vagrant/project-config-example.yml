@@ -12,3 +12,6 @@ forward_ports:
 
 # Run a shell script on boot
 bootstrap: vagrant/project.sh
+
+# Docker compose file to up on boot.  Should be relative to Vagrantfile.
+compose: ./docker-compose.yml

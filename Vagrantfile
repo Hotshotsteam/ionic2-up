@@ -10,8 +10,10 @@ project_config = {
   'vm_name' => false,
   'hostname' => false,
   'forward_ports' => false,
-  'bootstrap' => false
+  'bootstrap' => false,
+  'compose' => false
 }
+
 # Load project config
 if File.exists?('vagrant/project-config.yml')
   File.open('vagrant/project-config.yml', 'r') do |f|
@@ -50,9 +52,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   end
 
+  # Optional compose bootstrap
+  if project_config['compose']
+    config.vm.provision :shell, :path => "vagrant/compose.sh", name: "Docker Compose", args: "/vagrant/#{project_config['compose']}"
+  end
+
   # Optional project bootstrap
   if project_config['bootstrap']
     config.vm.provision :shell, :path => "#{project_config['bootstrap']}", name: "project"
   end
-
 end

@@ -2,4 +2,4 @@
 .vagrant*/
 .project
 .settings/
-
+vagrant/temp
