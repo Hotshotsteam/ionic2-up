@@ -28,7 +28,9 @@ dev_config = {
   'vm_name'       => false,
   'hostname'      => false,
   'forward_ports' => false,
-  'ssh_port'      => false
+  'ssh_port'      => false,
+  'ram'           => 2048,
+  'cpus'          => 1
 }
 
 # Load developer config
@@ -77,12 +79,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Virtualbox specific customisation
   config.vm.provider :virtualbox do |vb|
 
-    # Customize the box name
+    # Box name
     vm_name = dev_config['vm_name'] || project_config['vm_name']
     if vm_name
       vb.name = vm_name
     end
 
+    # Resources
+    vb.customize ["modifyvm", :id, "--cpus", dev_config['cpus']]
+    vb.customize ['modifyvm', :id, '--memory', dev_config['ram']]
   end
 
   # Optional compose bootstrap
