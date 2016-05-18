@@ -7,7 +7,8 @@ B2D_VERSION="1.11.0"
 
 # Project configuration
 project_config = {
-  'forward_ports': false
+  'vm_name' => false,
+  'forward_ports' => false
 }
 # Load project config
 if File.exists?('vagrant/project-config.yml')
@@ -30,6 +31,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     project_config['forward_ports'].each_pair do |guest_port, host_port|
       config.vm.network :forwarded_port, guest: guest_port, host: host_port
     end
+  end
+
+  # Virtualbox specific customisation
+  config.vm.provider :virtualbox do |vb|
+
+    # Customize the box name
+    if project_config['vm_name']
+      vb.name = project_config['vm_name']
+    end
+
   end
 
 end
