@@ -56,7 +56,6 @@ if [ $install ]; then
 fi
 
 # Wait for docker to run
-echo "Waiting for docker..."
 wait_docker
 
 # If docker hasn't started, try starting it

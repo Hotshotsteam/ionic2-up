@@ -37,7 +37,8 @@ dev_config = {
   'bridged_ip'       => false,
   'bootstrap'        => false,
   'compose'          => false,
-  'insecure_key'     => false
+  'insecure_key'     => false,
+  'docker_cache_path' => false
 }
 
 # Load developer config
@@ -108,6 +109,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Load docker cache
+  if dev_config['docker_cache_path']
+    if !File.directory?(dev_config['docker_cache_path'])
+      puts "Cannot find host docker cache path #{dev_config['docker_cache_path']}"
+      dev_config['docker_cache_path'] = false
+    else
+      config.vm.synced_folder dev_config['docker_cache_path'], '/docker-cache'
+      config.vm.provision :shell, :path => "vagrant/docker-cache-load.sh", name: "docker-cache-load"
+    end
+  end
+
   # Optional project compose
   if project_config['compose'] && (!dev_config['compose_replace'] || !dev_config['compose'])
     config.vm.provision :shell, :path => "vagrant/compose.sh", name: "Docker Compose", args: "/vagrant/#{project_config['compose']}"
@@ -126,5 +138,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Optional dev bootstrap
   if dev_config['bootstrap']
     config.vm.provision :shell, :path => "#{dev_config['bootstrap']}", name: "developer"
+  end
+
+  # Save docker cache
+  if dev_config['docker_cache_path']
+    config.vm.provision :shell, :path => "vagrant/docker-cache-save.sh", name: "docker-cache-save"
   end
 end

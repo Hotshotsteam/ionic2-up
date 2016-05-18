@@ -31,7 +31,7 @@ wait_on () {
 }
 
 wait_docker() {
-  wait_on 'pidof dockerx'
+  wait_on 'pidof docker'
   wait_on "docker -H unix://$1 ps -q"
 
   return $?
