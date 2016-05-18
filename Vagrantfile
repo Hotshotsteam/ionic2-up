@@ -26,19 +26,20 @@ end
 # Developer configuration
 # To override copy vagrant/developer-config-example.yml to vagrant/developer-config.yml
 dev_config = {
-  'box_check_update' => true,
-  'vm_name'          => false,
-  'hostname'         => false,
-  'forward_ports'    => false,
-  'ssh_port'         => false,
-  'ram'              => 2048,
-  'cpus'             => 1,
-  'bridged_adapter'  => false,
-  'bridged_ip'       => false,
-  'bootstrap'        => false,
-  'compose'          => false,
-  'insecure_key'     => false,
-  'docker_cache_path' => false
+  'box_check_update'  => true,
+  'vm_name'           => false,
+  'hostname'          => false,
+  'forward_ports'     => false,
+  'ssh_port'          => false,
+  'ram'               => 2048,
+  'cpus'              => 1,
+  'bridged_adapter'   => false,
+  'bridged_ip'        => false,
+  'bootstrap'         => false,
+  'compose'           => false,
+  'insecure_key'      => false,
+  'docker_cache_path' => false,
+  'secret_rsa'        => false
 }
 
 # Load developer config
@@ -118,6 +119,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.vm.synced_folder dev_config['docker_cache_path'], '/docker-cache'
       config.vm.provision :shell, :path => "vagrant/docker-cache-load.sh", name: "docker-cache-load"
     end
+  end
+
+  # Optional secrets provisioning
+  if dev_config['secret_rsa']
+    config.vm.provision :shell, :path => "vagrant/secrets.sh", name: "SSH Keys", args: "/vagrant/#{dev_config['secret_rsa']}"
   end
 
   # Optional project compose

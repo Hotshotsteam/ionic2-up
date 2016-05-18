@@ -1,5 +1,5 @@
 #!/bin/sh
-# Local config
+# Shared functions and constants
 
 CACHE_PATH="/docker-cache"
 

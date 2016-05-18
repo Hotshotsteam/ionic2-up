@@ -45,3 +45,7 @@ insecure_key: true
 # Set a path for docker image caching.
 # This greatly reduces vagrant destroy && vagrant up times.
 docker_cache_path: C:\path\to\cache
+
+# Specify id_rsa keys to copy to ~/.ssh
+# Specify the private key.  The public key must be the same with a .pub extension
+secret_rsa: secrets/id_rsa
