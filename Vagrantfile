@@ -9,7 +9,8 @@ B2D_VERSION="1.11.0"
 project_config = {
   'vm_name' => false,
   'hostname' => false,
-  'forward_ports' => false
+  'forward_ports' => false,
+  'bootstrap' => false
 }
 # Load project config
 if File.exists?('vagrant/project-config.yml')
@@ -47,6 +48,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.name = project_config['vm_name']
     end
 
+  end
+
+  # Optional project bootstrap
+  if project_config['bootstrap']
+    config.vm.provision :shell, :path => "#{project_config['bootstrap']}", name: "project"
   end
 
 end

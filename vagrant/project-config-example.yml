@@ -9,3 +9,6 @@ hostname: myproject
 forward_ports:
   80: 8080
   443: 8443
+
+# Run a shell script on boot
+bootstrap: vagrant/project.sh
