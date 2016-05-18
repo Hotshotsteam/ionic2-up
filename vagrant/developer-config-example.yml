@@ -4,3 +4,9 @@
 # Names
 vm_name: myproject
 hostname: myproject
+
+# Port forwarding
+# Forward any additional ports or override the project ports
+forward_ports:
+  80: 9080
+  443: 9443

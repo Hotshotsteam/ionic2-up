@@ -26,7 +26,8 @@ end
 # To override copy vagrant/developer-config-example.yml to vagrant/developer-config.yml
 dev_config = {
   'vm_name'       => false,
-  'hostname'      => false
+  'hostname'      => false,
+  'forward_ports' => false
 }
 
 # Load developer config
@@ -52,9 +53,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Forwarding for SSH
   config.vm.network "forwarded_port", guest: 22, host: 22, auto_correct: true
 
-  # Project port forwarding
+  # Port forwarding
+  forward_ports = {};
   if project_config['forward_ports']
-    project_config['forward_ports'].each_pair do |guest_port, host_port|
+    forward_ports = forward_ports.merge(project_config['forward_ports'])
+  end
+  if dev_config['forward_ports']
+    forward_ports = forward_ports.merge(dev_config['forward_ports'])
+  end
+
+  # Project port forwarding
+  if forward_ports.length > 0
+    forward_ports.each_pair do |guest_port, host_port|
       config.vm.network :forwarded_port, guest: guest_port, host: host_port
     end
   end
