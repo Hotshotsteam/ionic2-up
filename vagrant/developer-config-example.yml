@@ -24,3 +24,10 @@ cpus: 1
 # Use the Virtualbox Manager to find the exact name of the adapter
 bridged_adapter: "<name as shown in Virtualbox Manager>"
 bridged_ip: "192.168.1.50"
+
+# Docker compose file to up on boot.  Should be relative to Vagrantfile.
+compose: ./dev-compose.yml
+
+# Set this to true if your compose file overrides the project.  If this 
+# is not set then both the project and dev compose files will be run.
+compose_replace: false

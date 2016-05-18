@@ -25,14 +25,15 @@ end
 # Developer configuration
 # To override copy vagrant/developer-config-example.yml to vagrant/developer-config.yml
 dev_config = {
-  'vm_name'       => false,
-  'hostname'      => false,
-  'forward_ports' => false,
-  'ssh_port'      => false,
-  'ram'           => 2048,
-  'cpus'          => 1,
-  'bridged_adapter'   => false,
-  'bridged_ip'        => false,
+  'vm_name'         => false,
+  'hostname'        => false,
+  'forward_ports'   => false,
+  'ssh_port'        => false,
+  'ram'             => 2048,
+  'cpus'            => 1,
+  'bridged_adapter' => false,
+  'bridged_ip'      => false,
+  'compose'         => false
 }
 
 # Load developer config
@@ -97,9 +98,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Optional compose bootstrap
-  if project_config['compose']
+  # Optional project compose
+  if project_config['compose'] && (!dev_config['compose_replace'] || !dev_config['compose'])
     config.vm.provision :shell, :path => "vagrant/compose.sh", name: "Docker Compose", args: "/vagrant/#{project_config['compose']}"
+  end
+
+  # Optional dev compose
+  if dev_config['compose']
+    config.vm.provision :shell, :path => "vagrant/compose.sh", name: "Docker Compose", args: "/vagrant/#{dev_config['compose']}"
   end
 
   # Optional project bootstrap
