@@ -18,3 +18,9 @@ ssh_port: 2222
 # Resources
 ram: 2048
 cpus: 1
+
+# Bridged networking
+# Use this to bridge the box as a peer on the local network
+# Use the Virtualbox Manager to find the exact name of the adapter
+bridged_adapter: "<name as shown in Virtualbox Manager>"
+bridged_ip: "192.168.1.50"

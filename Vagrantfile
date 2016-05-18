@@ -30,7 +30,9 @@ dev_config = {
   'forward_ports' => false,
   'ssh_port'      => false,
   'ram'           => 2048,
-  'cpus'          => 1
+  'cpus'          => 1,
+  'bridged_adapter'   => false,
+  'bridged_ip'        => false,
 }
 
 # Load developer config
@@ -88,6 +90,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Resources
     vb.customize ["modifyvm", :id, "--cpus", dev_config['cpus']]
     vb.customize ['modifyvm', :id, '--memory', dev_config['ram']]
+
+    # Add bridged adaptor for network ip.  This is not reliable.
+    if dev_config['bridged_adapter']
+      config.vm.network 'public_network', bridge: dev_config['bridged_adapter'], ip: dev_config['bridged_ip'], adapter: 2
+    end
   end
 
   # Optional compose bootstrap
