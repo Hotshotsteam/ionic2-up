@@ -5,4 +5,4 @@
 vagrant/temp
 vagrant/developer-config.yml
 vagrant/cache
-secrets/
+vagrant/secrets

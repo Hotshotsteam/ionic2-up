@@ -88,6 +88,19 @@ Fork this repo and track updates.  This is useful if you are creating your own
 development bootstrap for specific platforms and libraries that other projects can
 use.
 
+## Tips
+If developers are using a non linux host and prefer using git on a linux shell,
+they can add less to the ```tce_extensions``` and provide an SSH key for gitHUB
+in their development config:
+
+```yaml
+tce_extensions:
+  less
+secret_rsa: vagrant/secrets/id_rsa
+```
+
+This will offer a better git experience in the guest.
+
 ## Contributing
 Pull requests are welcome.
 
