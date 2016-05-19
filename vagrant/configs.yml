@@ -1,0 +1,6 @@
+# Configs to load, and the order to load them in.
+# Properties in later configs will override previous configs.
+# Paths are relative to /vagrant
+configs:
+  - project-config.yml
+  - developer-config.yml

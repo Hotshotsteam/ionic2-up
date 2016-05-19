@@ -1,9 +1,9 @@
-# vagrant-docker-compose
+# developer-up
 Fast starting, simple bootstrap for your project's development environment.
 
 ## Overview
 The goal of this project is to provide the simplest possible on-boarding for
-developers on a project.  To start on the project, developers simply:
+developers on a project.  To start on a project, developers simply:
 
 1. Install git
 1. Install Vagrant
@@ -21,7 +21,10 @@ of [Alban Montaigu](https://github.com/AlbanMontaigu)'s
 
 The bootstrap is arranged in a way to allow projects and developers to customise
 their development environment without editing the default files.  This allows
-projects to update from this repo when new features are added.
+projects to update developer-up when new features are added.
+
+Configuration is also arranged to allow new bootstrap projects based on this one,
+to set up more specific platforms and environments without specific app code.
 
 ## Features
 
@@ -58,35 +61,37 @@ addition to the project.
 Docker images and tce packages can be cached on the host, greatly reducing the
 restart time on ```vagrant destroy && vagrant up```.
 
-To enable, developers can configure ```docker_cache_path``` in ```developer-config.yml```.
+To enable, configure ```docker_cache_path```.
 
 TinyCore extensions are automatically cached in the
 project's ```vagrant/cache/tce``` directory.
 
 ## Usage
 The bootstrap can be used in a number of ways, depending on your project and
-workflow.  In all cases, update ```vagrant/project-config.yml``` and version it
-in your repo.  See ```vagrant/project-config-example.yml``` for more detailed
-help.
+workflow.  Typically you would create a ```vagrant/project-config.yml``` and
+version it in your repo, while developers on your project create
+a ```vagrant/developer-config.yml```, which is ignored.
+
+See ```vagrant/config-example.yml``` for more detailed help.
 
 ### Boilerplate
 Simply download the raw files from this repo and add to your project.  Take
-ownership and maintain the bootstrap as your project requires.
+ownership and maintain the bootstrap as your project requires.  Optionally star
+this repo to watch for any interesting additions.
 
 ### Remote
 Add this repository as a remote:
 
-```git remote add dev-bootstrap https://github.com/Hotshotsteam/vagrant-docker-compose.git```
+```git remote add dev-up https://github.com/Hotshotsteam/vagrant-docker-compose.git```
 
 You can now fetch and merge updates:
-
-```git fetch dev-bootstrap```
-```git merge dev-bootstrap/master```
+  ```git fetch dev-up```
+  ```git merge dev-up/master```
 
 ### Fork
 Fork this repo and track updates.  This is useful if you are creating your own
-development bootstrap for specific platforms and libraries that other projects can
-use.
+development bootstrap for specific platforms and libraries that other projects
+can use.
 
 ## Tips
 If developers are using a non linux host and prefer using git on a linux shell,
@@ -100,6 +105,21 @@ secret_rsa: vagrant/secrets/id_rsa
 ```
 
 This will offer a better git experience in the guest.
+
+## Extending
+You can extend the project to provide a new bootstrap with additional
+environment for specific platforms.  Update ```vagrant/configs.yml``` with a new
+base config.  For example:
+
+```yaml
+configs:
+  - nodejs-config.yml
+  - project-config.yml
+  - developer-config.yml
+```
+
+Then include the new configs in your repo.  Now projects can use your bootstrap
+in the same way they would use developer-up.
 
 ## Contributing
 Pull requests are welcome.

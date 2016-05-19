@@ -1,5 +1,6 @@
-# Copy this file to developer-config.yml
-# You can simply remove settings that you don't need to override
+# Copy this file to project-config.yml or developer-config.yml, or any other config
+# specified by configs.yml and configure as desired.  You can remove settings that
+# you don't need to override.
 
 # Disable box update checks.  Slightly speeds up provisioning.
 box_check_update: false
@@ -9,10 +10,18 @@ vm_name: myproject
 hostname: myproject
 
 # Port forwarding
-# Forward any additional ports or override the project ports
+# Forward any additional ports
 forward_ports:
   80: 9080
   443: 9443
+
+# Run a shell script on boot
+bootstrap: vagrant/developer.sh
+
+# Developer config:
+# Typically these should only be configured by developers to suit their specific
+# host environment and network, and should be removed for project configs.
+# By default developer-config.yml is in .gitignore and ignored by git.
 
 # SSH Port
 # If this is not specified then Vagrant will resolve it for you
@@ -27,9 +36,6 @@ cpus: 1
 # Use the Virtualbox Manager to find the exact name of the adapter
 bridged_adapter: "<name as shown in Virtualbox Manager>"
 bridged_ip: "192.168.1.50"
-
-# Run a shell script on boot
-bootstrap: vagrant/developer.sh
 
 # Docker compose file to up on boot.  Should be relative to Vagrantfile.
 compose: ./dev-compose.yml
