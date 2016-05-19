@@ -1,0 +1,5 @@
+vm_name: ionic2
+hostname: ionic2
+forward_ports:
+  8100: 8100
+  35792: 35792

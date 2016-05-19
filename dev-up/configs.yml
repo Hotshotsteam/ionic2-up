@@ -2,5 +2,6 @@
 # Properties in later configs will override previous configs.
 # Paths are relative to /vagrant
 configs:
+  - ionic2-config.yml
   - project-config.yml
   - developer-config.yml
