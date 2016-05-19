@@ -13,7 +13,8 @@ project_config = {
   'hostname'         => false,
   'forward_ports'    => false,
   'bootstrap'        => false,
-  'compose'          => false
+  'compose'          => false,
+  'tce_extensions'   => false
 }
 
 # Load project config
@@ -41,7 +42,8 @@ dev_config = {
   'compose'           => false,
   'insecure_key'      => false,
   'docker_cache_path' => false,
-  'secret_rsa'        => false
+  'secret_rsa'        => false,
+  'tce_extensions'    => false
 }
 
 # Load developer config
@@ -114,6 +116,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Load tce cache
+  extensions = [];
+  project_config['tce_extensions'] = project_config['tce_extensions'] ? project_config['tce_extensions'] : []
+  dev_config['tce_extensions'] = dev_config['tce_extensions'] ? dev_config['tce_extensions'] : []
+  extensions = (extensions + project_config['tce_extensions'].to_a + dev_config['tce_extensions'].to_a).uniq
+
+  if extensions.length > 0
+    config.vm.provision :shell, :path => "vagrant/tce-cache-install.sh", name: "Load TCE Cache", args: extensions
+  end
+
   # Load docker cache
   if dev_config['docker_cache_path']
     if !File.directory?(dev_config['docker_cache_path'])
@@ -121,7 +133,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       dev_config['docker_cache_path'] = false
     else
       config.vm.synced_folder dev_config['docker_cache_path'], '/docker-cache'
-      config.vm.provision :shell, :path => "vagrant/docker-cache-load.sh", name: "docker-cache-load"
+      config.vm.provision :shell, :path => "vagrant/docker-cache-load.sh", name: "Load Docker Cache"
     end
   end
 
@@ -142,16 +154,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Optional project bootstrap
   if project_config['bootstrap']
-    config.vm.provision :shell, :path => "#{project_config['bootstrap']}", name: "project"
+    config.vm.provision :shell, :path => "#{project_config['bootstrap']}", name: "Project Bootstrap"
   end
 
   # Optional dev bootstrap
   if dev_config['bootstrap']
-    config.vm.provision :shell, :path => "#{dev_config['bootstrap']}", name: "developer"
+    config.vm.provision :shell, :path => "#{dev_config['bootstrap']}", name: "Developer Bootstrap"
   end
 
   # Save docker cache
   if dev_config['docker_cache_path']
-    config.vm.provision :shell, :path => "vagrant/docker-cache-save.sh", name: "docker-cache-save"
+    config.vm.provision :shell, :path => "vagrant/docker-cache-save.sh", name: "Docker Save Cache"
   end
 end

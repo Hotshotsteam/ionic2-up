@@ -18,3 +18,12 @@ bootstrap: vagrant/project.sh
 
 # Docker compose file to up on boot.  Should be relative to Vagrantfile.
 compose: ./docker-compose.yml
+
+# Specify tce extensions to install
+# These are cached in vagrant/cache/tce for faster restarts.
+# Note that the developer config can add to these so you should probably only
+# install packages required by the project rather than developers, which makes the
+# below a bad example.
+tce_extensions:
+  nano
+  less
