@@ -1,0 +1,63 @@
+# Copy this file to project-config.yml or developer-config.yml, or any other config
+# specified by configs.yml and configure as desired.  You can remove settings that
+# you don't need to override.
+
+# Disable box update checks.  Slightly speeds up provisioning.
+box_check_update: false
+
+# Names
+vm_name: myproject
+hostname: myproject
+
+# Port forwarding
+# Forward any additional ports
+forward_ports:
+  80: 9080
+  443: 9443
+
+# Run a shell script on boot
+# Note: If this is not the first config and previous configs specify a bootstrap
+# script then you may want to source that script in your own.
+# See dev-up/configs.yml to see what configs are loaded. 
+bootstrap: dev-up/developer.sh
+
+# Developer config:
+# Typically these should only be configured by developers to suit their specific
+# host environment and network, and should be removed for project configs.
+# By default developer-config.yml is in .gitignore and ignored by git.
+
+# SSH Port
+# If this is not specified then Vagrant will resolve it for you
+ssh_port: 2222
+
+# Resources
+ram: 2048
+cpus: 1
+
+# Bridged networking
+# Use this to bridge the box as a peer on the local network
+# Use the Virtualbox Manager to find the exact name of the adapter
+bridged_adapter: "<name as shown in Virtualbox Manager>"
+bridged_ip: "192.168.1.50"
+
+# Docker compose file to up on boot.  Should be relative to dev-up/.
+compose: ./dev-compose.yml
+
+# Disable key generation on vagrant up.  This allows you to use the
+# default vagrant key every time.  Consider your network security first.
+insecure_key: true
+
+# Set a path for docker image caching.
+# This greatly reduces vagrant destroy && vagrant up times.
+docker_cache_path: C:\path\to\cache
+
+# Specify id_rsa keys to copy to ~/.ssh
+# Specify the private key.  The public key must be the same with a .pub extension
+secret_rsa: secrets/id_rsa
+
+# Specify tce extensions to install
+# These are cached in dev-up/cache/tce for faster restarts.
+# The extensions are installed in addition to any installed for the project.
+tce_extensions:
+  less
+  nano

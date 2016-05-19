@@ -1,0 +1,8 @@
+.vagrant
+.vagrant*/
+.project
+.settings/
+dev-up/temp
+dev-up/developer-config.yml
+dev-up/cache
+dev-up/secrets
