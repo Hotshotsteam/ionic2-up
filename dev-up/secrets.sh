@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# General Vagrant docker set up.
 # Copies secrets to the appropriate location.
 #
 # Currently id_rsa and dockerHUB credentials are supported.
@@ -8,10 +7,10 @@
 # and a .pub extension.
 #
 # Usage:
-#   vagrant.sh <path to id_rsa private key> <path to docker hub credentials json>
+#   secrets.sh <path to id_rsa private key> <path to docker hub credentials json>
 
 # Include shared
-source /vagrant/vagrant/shared.sh
+source /vagrant/dev-up/shared.sh
 
 # Add id_rsa file
 ID_RSA=$1

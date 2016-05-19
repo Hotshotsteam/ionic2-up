@@ -16,7 +16,10 @@ forward_ports:
   443: 9443
 
 # Run a shell script on boot
-bootstrap: vagrant/developer.sh
+# Note: If this is not the first config and previous configs specify a bootstrap
+# script then you may want to source that script in your own.
+# See dev-up/configs.yml to see what configs are loaded. 
+bootstrap: dev-up/developer.sh
 
 # Developer config:
 # Typically these should only be configured by developers to suit their specific
@@ -37,12 +40,8 @@ cpus: 1
 bridged_adapter: "<name as shown in Virtualbox Manager>"
 bridged_ip: "192.168.1.50"
 
-# Docker compose file to up on boot.  Should be relative to Vagrantfile.
+# Docker compose file to up on boot.  Should be relative to dev-up/.
 compose: ./dev-compose.yml
-
-# Set this to true if your compose file overrides the project.  If this 
-# is not set then both the project and dev compose files will be run.
-compose_replace: false
 
 # Disable key generation on vagrant up.  This allows you to use the
 # default vagrant key every time.  Consider your network security first.
@@ -57,7 +56,7 @@ docker_cache_path: C:\path\to\cache
 secret_rsa: secrets/id_rsa
 
 # Specify tce extensions to install
-# These are cached in vagrant/cache/tce for faster restarts.
+# These are cached in dev-up/cache/tce for faster restarts.
 # The extensions are installed in addition to any installed for the project.
 tce_extensions:
   less

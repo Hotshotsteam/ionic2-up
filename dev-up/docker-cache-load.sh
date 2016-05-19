@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Include shared
-source /vagrant/vagrant/shared.sh
+source /vagrant/dev-up/shared.sh
 
 # Check cache folder is mounted
 if [ ! -d /docker-cache ]; then

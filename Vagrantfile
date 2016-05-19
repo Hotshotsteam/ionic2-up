@@ -6,7 +6,7 @@ B2D_BOX="AlbanMontaigu/boot2docker"
 B2D_VERSION="1.11.0"
 
 # developer-up constants
-DEV_UP_PATH="vagrant/"
+DEV_UP_PATH="dev-up/"
 
 # Configuration
 # To override add vagrant/project-config.yml and vagrant/developer-config.yml

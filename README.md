@@ -64,15 +64,15 @@ restart time on ```vagrant destroy && vagrant up```.
 To enable, configure ```docker_cache_path```.
 
 TinyCore extensions are automatically cached in the
-project's ```vagrant/cache/tce``` directory.
+project's ```dev-up/cache/tce``` directory.
 
 ## Usage
 The bootstrap can be used in a number of ways, depending on your project and
-workflow.  Typically you would create a ```vagrant/project-config.yml``` and
+workflow.  Typically you would create a ```dev-up/project-config.yml``` and
 version it in your repo, while developers on your project create
-a ```vagrant/developer-config.yml```, which is ignored.
+a ```dev-up/developer-config.yml```, which is ignored.
 
-See ```vagrant/config-example.yml``` for more detailed help.
+See ```dev-up/config-example.yml``` for more detailed help.
 
 ### Boilerplate
 Simply download the raw files from this repo and add to your project.  Take
@@ -82,7 +82,7 @@ this repo to watch for any interesting additions.
 ### Remote
 Add this repository as a remote:
 
-```git remote add dev-up https://github.com/Hotshotsteam/vagrant-docker-compose.git```
+```git remote add dev-up https://github.com/Hotshotsteam/developer-up.git```
 
 You can now fetch and merge updates:
   ```git fetch dev-up```
@@ -101,14 +101,14 @@ in their development config:
 ```yaml
 tce_extensions:
   less
-secret_rsa: vagrant/secrets/id_rsa
+secret_rsa: dev-up/secrets/id_rsa
 ```
 
 This will offer a better git experience in the guest.
 
 ## Extending
 You can extend the project to provide a new bootstrap with additional
-environment for specific platforms.  Update ```vagrant/configs.yml``` with a new
+environment for specific platforms.  Update ```dev-up/configs.yml``` with a new
 base config.  For example:
 
 ```yaml

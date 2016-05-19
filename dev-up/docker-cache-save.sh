@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Include shared
-source /vagrant/vagrant/shared.sh
+source /vagrant/dev-up/shared.sh
 
 # Check cache folder is mounted
 if [ ! -d /docker-cache ]; then
@@ -40,5 +40,5 @@ echo "saved $saved images with $errors errors"
 
 # Allow this script to be run with 'cache-docker'
 if [ ! -f /usr/bin/cache-docker ]; then
-  ln -s /vagrant/vagrant/docker-cache-save.sh /usr/bin/cache-docker
+  ln -s /vagrant/dev-up/docker-cache-save.sh /usr/bin/cache-docker
 fi

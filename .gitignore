@@ -2,7 +2,7 @@
 .vagrant*/
 .project
 .settings/
-vagrant/temp
-vagrant/developer-config.yml
-vagrant/cache
-vagrant/secrets
+dev-up/temp
+dev-up/developer-config.yml
+dev-up/cache
+dev-up/secrets

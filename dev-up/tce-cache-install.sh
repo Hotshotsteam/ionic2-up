@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Include shared
-source /vagrant/vagrant/shared.sh
+source /vagrant/dev-up/shared.sh
 
-HOST_CACHE=/vagrant/vagrant/cache/tce/
+HOST_CACHE=/vagrant/dev-up/cache/tce/
 GUEST_CACHE=/tmp/tce/optional/
 
 if [ -z $1 ]; then

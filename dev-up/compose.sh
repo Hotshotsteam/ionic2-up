@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Include shared
-source /vagrant/vagrant/shared.sh
+source /vagrant/dev-up/shared.sh
 
 # Constants
 COMPOSE_VERSION='1.7.1'
-COMPOSE_BIN_CACHE="/vagrant/vagrant/cache/docker-compose-$COMPOSE_VERSION"
-CACHE_PATH="/vagrant/vagrant/cache"
+COMPOSE_BIN_CACHE="/vagrant/dev-up/cache/docker-compose-$COMPOSE_VERSION"
+CACHE_PATH="/vagrant/dev-up/cache"
 
 # Parse args
 OUT=/dev/null
@@ -38,11 +38,11 @@ if [ $install ]; then
   # Ensure compose is installed
   if [ ! -f $COMPOSE_BIN_CACHE ]; then
     echo "Installing docker-compose..."
-  
+
     if [ ! -d $CACHE_PATH ]; then
       mkdir -p $CACHE_PATH || error_exit "Could not make cache dir for compose"
     fi
-  
+
     echo "Downloading..."
     curl -L \
       https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` \
