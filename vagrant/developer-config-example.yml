@@ -29,7 +29,7 @@ bridged_adapter: "<name as shown in Virtualbox Manager>"
 bridged_ip: "192.168.1.50"
 
 # Run a shell script on boot
-bootstrap: vagrant/project.sh
+bootstrap: vagrant/developer.sh
 
 # Docker compose file to up on boot.  Should be relative to Vagrantfile.
 compose: ./dev-compose.yml
