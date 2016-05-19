@@ -110,3 +110,6 @@ Do note the project goals:
 - The ability to pull updates into existing projects without conflicts.
 
 Support for other providers, and improvements for OSX (currently untested) are especially welcome.
+
+## See also
+- Albian Montaigu's [boot2docker-vagrant-template](https://github.com/AlbanMontaigu/boot2docker-vagrant-template)
