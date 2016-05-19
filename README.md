@@ -1,9 +1,9 @@
-# developer-up
-Fast starting, simple bootstrap for your project's development environment.
+# ionic2-up
+Fast starting, simple bootstrap for your ionic2 project's development environment.
 
 ## Overview
 The goal of this project is to provide the simplest possible on-boarding for
-developers on a project.  To start on a project, developers simply:
+developers on an ionic2 project.  To start on a project, developers simply:
 
 1. Install git
 1. Install Vagrant
