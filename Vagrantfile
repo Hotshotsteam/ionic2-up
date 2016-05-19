@@ -19,7 +19,9 @@ project_config = {
 # Load project config
 if File.exists?('vagrant/project-config.yml')
   File.open('vagrant/project-config.yml', 'r') do |f|
-    project_config = project_config.merge(YAML.load(f))
+    if loaded = YAML.load(f)
+      project_config = project_config.merge(loaded)
+    end
   end
 end
 
@@ -45,7 +47,9 @@ dev_config = {
 # Load developer config
 if File.exists?('vagrant/developer-config.yml')
   File.open('vagrant/developer-config.yml', 'r') do |f|
-    dev_config = dev_config.merge(YAML.load(f))
+    if loaded = YAML.load(f)
+      dev_config = dev_config.merge(loaded)
+    end
   end
 end
 
