@@ -26,6 +26,9 @@ projects to update developer-up when new features are added.
 Configuration is also arranged to allow new bootstrap projects based on this one,
 to set up more specific platforms and environments without specific app code.
 
+Project dependencies are expected to be provided by docker containers and
+are started with docker-compose.
+
 ## Features
 
 ### Containerised Dependencies
