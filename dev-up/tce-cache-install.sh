@@ -3,7 +3,8 @@
 # Include shared
 source /vagrant/dev-up/shared.sh
 
-HOST_CACHE=/vagrant/dev-up/cache/tce/
+HOST_CACHE_DIR=/vagrant/dev-up/cache
+HOST_CACHE=$HOST_CACHE_DIR/tce/
 GUEST_CACHE=/tmp/tce/optional/
 
 if [ -z $1 ]; then
@@ -26,8 +27,11 @@ do
 done
 
 # Save guest cache
-if [ ! -d $GUEST_CACHE ]; then
-  mkdir $GUEST_CACHE || error_exit "Could not create host directory $GUEST_CACHE for tce caching"
+if [ ! -d $HOST_CACHE_DIR ]; then
+  mkdir -p $HOST_CACHE_DIR || error_exit "Could not create host directory $HOST_CACHE_DIR for tce caching"
+fi
+if [ ! -d $HOST_CACHE ]; then
+  mkdir -p $HOST_CACHE || error_exit "Could not create host directory $HOST_CACHE for tce caching"
 fi
 
 if [ `ls $GUEST_CACHE | wc -l` -gt 0 ]; then
