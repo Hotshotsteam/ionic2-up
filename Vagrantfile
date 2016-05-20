@@ -28,7 +28,8 @@ dev_up_config = {
   'bridged_ip'        => false,
   'insecure_key'      => false,
   'docker_cache_path' => false,
-  'secret_rsa'        => false
+  'secret_rsa'        => false,
+  'usb_devices'       => false
 }
 
 # Load configs specified by configs.yml
@@ -97,6 +98,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Add bridged adaptor for network ip.  This is not reliable.
     if dev_up_config['bridged_adapter']
       config.vm.network 'public_network', bridge: dev_up_config['bridged_adapter'], ip: dev_up_config['bridged_ip'], adapter: 2
+    end
+
+    # Add USB device filters
+    if dev_up_config['usb_devices'] && dev_up_config['usb_devices'].length > 0
+      vb.customize ["modifyvm", :id, "--usb", "on"]
+      vb.customize ["modifyvm", :id, "--usbehci", "on"]
+
+      index = 1
+      dev_up_config['usb_devices'].each do |usb_device|
+        vb.customize ["usbfilter", "add", "0",
+        "--target", :id,
+        "--name", "developer-up filter #{index}",
+        "--vendorid", usb_device]
+
+        index+=1
+      end
     end
   end
 
