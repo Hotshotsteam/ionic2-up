@@ -3,3 +3,4 @@ hostname: ionic2
 forward_ports:
   8100: 8100
   35792: 35792
+  5037: 5037
