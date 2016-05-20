@@ -4,3 +4,4 @@ forward_ports:
   8100: 8100
   35792: 35792
   5037: 5037
+bootstrap: ionic2-up/aliases.sh
