@@ -61,3 +61,9 @@ secret_rsa: secrets/id_rsa
 tce_extensions:
   less
   nano
+
+# USB devices
+# Add the vendor id of any usb devices to attach.  Be aware of conflicts with other
+# running boxes.
+usb_devices:
+  18d1
