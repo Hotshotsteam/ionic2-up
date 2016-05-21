@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Load tce cache
   if dev_up_config['tce_extensions'] && (dev_up_config['tce_extensions'].length > 0)
-    config.vm.provision :shell, :path => DEV_UP_PATH + "tce-cache-install.sh", name: "Load TCE Cache", args: dev_up_config['tce_extensions']
+    config.vm.provision :shell, :path => DEV_UP_PATH + "tce-cache-install.sh", name: "Load TCE Cache", run: "always", args: dev_up_config['tce_extensions']
   end
 
   # Load docker cache
@@ -133,16 +133,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Provision secrets
-  config.vm.provision :shell, :path => DEV_UP_PATH + "secrets.sh", name: "Secrets", args: "/vagrant/#{DEV_UP_PATH}/secrets"
+  config.vm.provision :shell, :path => DEV_UP_PATH + "secrets.sh", name: "Secrets", run: "always", args: "/vagrant/#{DEV_UP_PATH}/secrets"
 
   # Optional project compose
   if dev_up_config['compose']
-    config.vm.provision :shell, :path => DEV_UP_PATH + "compose.sh", name: "Docker Compose", args: "/vagrant/#{dev_up_config['compose']}"
+    config.vm.provision :shell, :path => DEV_UP_PATH + "compose.sh", name: "Docker Compose", run: "always", args: "/vagrant/#{dev_up_config['compose']}"
   end
 
   # Optional bootstrap
   if dev_up_config['bootstrap']
-    config.vm.provision :shell, :path => "#{dev_up_config['bootstrap']}", name: "Project Bootstrap"
+    config.vm.provision :shell, :path => "#{dev_up_config['bootstrap']}", run: "always", name: "Project Bootstrap"
   end
 
   # Save docker cache
