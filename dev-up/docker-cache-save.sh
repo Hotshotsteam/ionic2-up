@@ -24,9 +24,10 @@ do
   name=$(echo $image | cut -f1 -d#)
   tag=$(echo $image | cut -f2 -d#)
   hash=$(echo $image | cut -f3 -d#)
+  filename=$(echo $name | sed -e s/\\//-/)
 
-  if [ ! -f /docker-cache/$name-$tag-$hash.tar ]; then
-    docker save -o /docker-cache/$name-$tag-$hash.tar $name:$tag &>/dev/null || error=1
+  if [ ! -f /docker-cache/$filename-$tag-$hash.tar ]; then
+    docker save -o /docker-cache/$filename-$tag-$hash.tar $name:$tag &>/dev/null || error=1
   fi
 
   if [ $error -eq 0 ]; then
