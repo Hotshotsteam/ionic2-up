@@ -7,7 +7,7 @@ if [ ! -f /usr/bin/ionic ]; then
   echo "docker run --rm -ti --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v=$PROJECT_PATH:/project:rw \
-    -p 8100:8100 -p 35792:35792 -p 5037:5037 \
+    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
     hotshotsxyz/ionic2-up:dev \
     ionic \$@" \
   > /usr/bin/ionic
@@ -19,7 +19,7 @@ if [ ! -f /usr/bin/adb ]; then
   echo "docker run --rm -ti --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v=$PROJECT_PATH:/project:rw \
-    -p 8100:8100 -p 35792:35792 -p 5037:5037 \
+    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
     hotshotsxyz/ionic2-up:dev /bin/bash -c \". /root/.bashrc && \
     adb \$@\"" \
   > /usr/bin/adb
