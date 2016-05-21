@@ -12,23 +12,25 @@ DEV_UP_PATH="dev-up/"
 # To override add vagrant/project-config.yml and vagrant/developer-config.yml
 dev_up_config = {
   # Project and developer config
-  'box_check_update' => true,
-  'vm_name'          => false,
-  'hostname'         => false,
-  'forward_ports'    => false,
-  'bootstrap'        => false,
-  'compose'          => false,
-  'tce_extensions'   => false,
+  'box_check_update'   => true,
+  'vm_name'            => false,
+  'hostname'           => false,
+  'forward_ports'      => false,
+  'bootstrap'          => false,
+  'compose'            => false,
+  'tce_extensions'     => false,
+  'host_project_path'  => 'project',
+  'guest_project_path' => '/project',
 
   # Developer config
-  'ssh_port'          => false,
-  'ram'               => 2048,
-  'cpus'              => 1,
-  'bridged_adapter'   => false,
-  'bridged_ip'        => false,
-  'insecure_key'      => false,
-  'docker_cache_path' => false,
-  'usb_devices'       => false
+  'ssh_port'           => false,
+  'ram'                => 2048,
+  'cpus'               => 1,
+  'bridged_adapter'    => false,
+  'bridged_ip'         => false,
+  'insecure_key'       => false,
+  'docker_cache_path'  => false,
+  'usb_devices'        => false
 }
 
 # Load configs specified by configs.yml
@@ -82,6 +84,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Add project sync folder
+  if dev_up_config['host_project_path']
+    if !dev_up_config['guest_project_path']
+      puts "host_project_path specified but no guest.  Check your project and developer config."
+    else
+      config.vm.synced_folder dev_up_config['host_project_path'], dev_up_config['guest_project_path'], create: true
+    end
+  end
+
   # Virtualbox specific customisation
   config.vm.provider :virtualbox do |vb|
 
@@ -115,6 +126,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
     end
   end
+
+  # Export environment variables
+  config.vm.provision :shell, :path => DEV_UP_PATH + "env.sh", name: "Environment Variables", run: "always", args: dev_up_config['guest_project_path']
 
   # Load tce cache
   if dev_up_config['tce_extensions'] && (dev_up_config['tce_extensions'].length > 0)

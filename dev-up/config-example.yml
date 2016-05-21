@@ -21,6 +21,12 @@ forward_ports:
 # See dev-up/configs.yml to see what configs are loaded. 
 bootstrap: dev-up/developer.sh
 
+# Change the project sync folder.  host_project_path should point to the project on
+# the host, while guest_project_path specifies where it will be in the VM.
+# Usually you can just use the default project/ => /project
+host_project_path: myproject
+guest_project_path: myproject
+
 # Developer config:
 # Typically these should only be configured by developers to suit their specific
 # host environment and network, and should be removed for project configs.
