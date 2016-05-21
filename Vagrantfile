@@ -28,7 +28,6 @@ dev_up_config = {
   'bridged_ip'        => false,
   'insecure_key'      => false,
   'docker_cache_path' => false,
-  'secret_rsa'        => false,
   'usb_devices'       => false
 }
 
@@ -133,10 +132,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Optional secrets provisioning
-  if dev_up_config['secret_rsa']
-    config.vm.provision :shell, :path => DEV_UP_PATH + "secrets.sh", name: "SSH Keys", args: "/vagrant/#{dev_up_config['secret_rsa']}"
-  end
+  # Provision secrets
+  config.vm.provision :shell, :path => DEV_UP_PATH + "secrets.sh", name: "Secrets", args: "/vagrant/#{DEV_UP_PATH}/secrets"
 
   # Optional project compose
   if dev_up_config['compose']

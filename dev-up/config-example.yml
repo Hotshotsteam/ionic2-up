@@ -51,10 +51,6 @@ insecure_key: true
 # This greatly reduces vagrant destroy && vagrant up times.
 docker_cache_path: C:\path\to\cache
 
-# Specify id_rsa keys to copy to ~/.ssh
-# Specify the private key.  The public key must be the same with a .pub extension
-secret_rsa: secrets/id_rsa
-
 # Specify tce extensions to install
 # These are cached in dev-up/cache/tce for faster restarts.
 # The extensions are installed in addition to any installed for the project.
