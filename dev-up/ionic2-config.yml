@@ -2,7 +2,7 @@ vm_name: ionic2
 hostname: ionic2
 forward_ports:
   8100: 8100
-  35792: 35792
+  35729: 35729
   5037: 5037
 bootstrap: dev-up/ionic2-up/aliases.sh
 compose: dev-up/ionic2-up/docker-compose.yml
