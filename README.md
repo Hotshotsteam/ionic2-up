@@ -1,138 +1,143 @@
 # ionic2-up
-Fast starting, simple bootstrap for your ionic2 project's development environment.
+Fast starting, simple bootstrap for your ionic 2 project's development environment.
 
 ## Overview
-The goal of this project is to provide the simplest possible on-boarding for
-developers on an ionic2 project.  To start on a project, developers simply:
-
-1. Install git
-1. Install Vagrant
+This project is a [developer-up](https://github.com/Hotshotsteam/developer-up) environment for Ionic 2 development.  It allows your developers to on-board with:
 
 ```sh
-git clone <path/to/repo>
-cd <path/to/repo>
+git clone git@github.com:Hotshotsteam/ionic2-up.git .
+git clone <path/to/your/repo> project/
 vagrant up
 ```
 
-A lightweight 36mb, TinyCore based
-[boot2docker](https://github.com/boot2docker/boot2docker) VM image is used care
-of [Alban Montaigu](https://github.com/AlbanMontaigu)'s
-[Vagrant box](https://atlas.hashicorp.com/AlbanMontaigu/boxes/boot2docker).
+For more information on developer-up, see the [developer-up README.md](https://github.com/Hotshotsteam/developer-up).
 
-The bootstrap is arranged in a way to allow projects and developers to customise
-their development environment without editing the default files.  This allows
-projects to update developer-up when new features are added.
+## Set up
 
-Configuration is also arranged to allow new bootstrap projects based on this one,
-to set up more specific platforms and environments without specific app code.
+### Prerequisites
+First install the pre-requisites if you don't already have them installed:
 
-Project dependencies are expected to be provided by docker containers and
-are started with docker-compose.
+- [Git](https://git-scm.com/)
+- [Vagrant](https://www.vagrantup.com/)
+- [Virtualbox](https://www.virtualbox.org/)
+- [Oracle VM Virtualbox Extension Pack](https://www.virtualbox.org/wiki/Downloads)
 
-## Features
+### Start the environment
+**Note:** It's highly recommended to enable docker image caching before your first run.  See [Caching](https://github.com/Hotshotsteam/client/wiki/Development-Environment#caching) below.
 
-### Containerised Dependencies
-Your project dependencies can be containerised and specified in a simple
-docker-compose.yml which will auto fetch and start on ```vagrant up```.
+Clone the client project and open a command line in the project directory, then:
 
-### Simple configuration
-Use a simple ```project-config.yml``` and ```developer-config.yml``` to
-customise the box provisioning without editing the boilerplate Vagrantfile or
-shell scripts.
+```sh
+vagrant up
+```
 
-Projects can:
-- Specify the default ports to forward, as used by the project.
-- Customise the default box and host names.
-- Specify additional TinyCore extensions to load.
-- Specify an additional shell script to run on provision.
-- Specify a docker-compose.yml to run after provision.
+### Customisation
+The environment and VM can be customised to better suit your host machine and network.  To configure your environment without committing to the repo, create a ```dev-up/developer-config.yml``` and add the configuration that you need.  This file will be ignored by git.  See ```dev-up/example-config.yml``` for details on the available option.
 
-Developers can:
-- Customise the resources used by the box (RAM and CPU).
-- Customise the box and host names.
-- Override and add additional ports to forward.
-- Override the SSH port.
-- Add a bridged network adapter to join the host network.
-- Add SSH keys to the box (for example, to authenticate with GitHUB).
-- Specify additional TinyCore extensions to load.
-- Specify an additional shell script to run on provision.
-- Specify a docker-compose.yml to run after provision, in place of, or in
-addition to the project.
-- Enable Docker image caching by specifying a cache path on the host.
-
-### Image and Package caching
-Docker images and tce packages can be cached on the host, greatly reducing the
-restart time on ```vagrant destroy && vagrant up```.
-
-To enable, configure ```docker_cache_path```.
-
-TinyCore extensions are automatically cached in the
-project's ```dev-up/cache/tce``` directory.
-
-## Usage
-The bootstrap can be used in a number of ways, depending on your project and
-workflow.  Typically you would create a ```dev-up/project-config.yml``` and
-version it in your repo, while developers on your project create
-a ```dev-up/developer-config.yml```, which is ignored.
-
-See ```dev-up/config-example.yml``` for more detailed help.
-
-### Boilerplate
-Simply download the raw files from this repo and add to your project.  Take
-ownership and maintain the bootstrap as your project requires.  Optionally star
-this repo to watch for any interesting additions.
-
-### Remote
-Add this repository as a remote:
-
-```git remote add dev-up https://github.com/Hotshotsteam/developer-up.git```
-
-You can now fetch and merge updates:
-  ```git fetch dev-up```
-  ```git merge dev-up/master```
-
-### Fork
-Fork this repo and track updates.  This is useful if you are creating your own
-development bootstrap for specific platforms and libraries that other projects
-can use.
-
-## Tips
-If developers are using a non linux host and prefer using git on a linux shell,
-they can add less to the ```tce_extensions``` and provide an SSH key for gitHUB
-in their development config:
+For developers, the most interesting options are:
 
 ```yaml
+# Port forwarding
+# Forward any additional ports
+forward_ports:
+  8100: 8100
+  35792: 35792
+  5037: 5037
+
+# Run a shell script on boot
+bootstrap: dev-up/developer.sh
+
+# SSH Port
+# If this is not specified then Vagrant will resolve it for you
+ssh_port: 2222
+
+# Resources
+ram: 2048
+cpus: 1
+
+# Disable key generation on vagrant up.  This allows you to use the
+# default vagrant key every time.  Consider your network security first.
+insecure_key: true
+
+# Set a path for docker image caching.
+# This greatly reduces vagrant destroy && vagrant up times.
+docker_cache_path: C:\path\to\cache
+
+# Specify tce extensions to install
+# These are cached in dev-up/cache/tce for faster restarts.
+# The extensions are installed in addition to any installed for the project.
 tce_extensions:
   less
-secret_rsa: dev-up/secrets/id_rsa
+  nano
+
+# USB devices
+# Add the vendor id of any usb devices to attach.  Be aware of conflicts with other
+# running boxes.
+usb_devices:
+  18d1
 ```
 
-This will offer a better git experience in the guest.
+### Connect via SSH
+Once the VM is running use ```vagrant ssh``` to get the SSH details for the machine, and optionally connect with a third party SSH terminal.
 
-## Extending
-You can extend the project to provide a new bootstrap with additional
-environment for specific platforms.  Update ```dev-up/configs.yml``` with a new
-base config.  For example:
+If you set ```ssh_port``` in your config then this should be the SSH port, allowing a consistent port when you stop and start the environment.
 
-```yaml
-configs:
-  - nodejs-config.yml
-  - project-config.yml
-  - developer-config.yml
+The default user and password is ```docker``` and ```tcuser``` but you will have a better experience logging in with a key.  To use the default vagrant key, set ```insecure_key``` to true in your ```developer-config.yml```.  You can then use the ```.vagrant.d/insecure_private_key``` in your home folder.  Please be aware of your network security.  Ensure the ssh port is fire-walled on your host machine.
+
+### Caching
+The environment supports caching of docker images.  This allows images to be saved to and loaded from your host machine.  Enabling docker image caching greatly reduces the time to delete and restart the development VM.  To enable caching update ```docker_cache_path``` in your ```development-config.yml``` to point to an absolute path on your host machine.
+
+### Using Ionic and adb
+The Ionic2 environment is provided by a docker image that is pulled / built on start up.  Useful aliases are also created to let you use ionic and adb as if they were on the VM rather than in the container.
+
+Simply use the ```ionic``` and ```adb``` commands as documented.
+
+```
+# Start the live server
+ionic serve
+
+# Check connected USB devices
+adb devices
+
+# Run on your android device
+ionic run android
 ```
 
-Then include the new configs in your repo.  Now projects can use your bootstrap
-in the same way they would use developer-up.
+Commands for other tools may be added later if found to be necessary.
 
-## Contributing
-Pull requests are welcome.
+Note that the first time you use some of the ionic commands (```serve```, ```run```, ```build```), ionic will need to provision dependencies and platform files.  This means the first run may take some time.  These files are added to the project path (and ignored by git) so that the next time you run them, serve and build times will be much quicker.
 
-Do note the project goals:
+### Connecting a USB device
+Before you can run on a local Android device you will need to add the device id to your ```developer-config.yml```.  This only needs to be done once.
 
-- Simplicity (```vagrant up```)
-- The ability to pull updates into existing projects without conflicts.
+1. Find out the ```deviceId``` of your device (there are probably faster ways than this):
+ 1. Plug your device in.
+ 1. Open the Virtualbox app.
+ 1. Check for your VM in the list (```ionic2-up``` by default).
+ 1. If it's not there, use ```vagrant up``` to start it.
+ 1. If it **is** running, use ```vagrant halt``` to power off the machine.
+ 1. Click the VM in Virtualbox.
+ 1. Click *Settings* to open the Settings dialogue for the VM.
+ 1. Click *USB* to open the USB options.
+ 1. If not enabled, check *Enable USB Controller*.
+ 1. Select ```USB 2.0 (EHCI) Controller```.
+ 1. Click the *Add Device Filter* icon (usb plug with a + symbol).
+ 1. Hover the mouse pointer over your device in the list and make a note of the *Vendor ID*.
+ 1. You can *Cancel* all the dialogues and exit Virtualbox.
+1. Update ```usb_devices``` in your ```developer-config.yml``` (see above) with the device id.
+1. Reprovision the VM with either:
+```vagrant up --provision``` or ```vagrant destroy``` and ```vagrant up```
+1. Reconnect the device and check it's working in the VM with ```adb devices```.  If the device isn't shown, you may need to restart the adb daemon with ```adb kill-server && adb start-server```.
+1. Whenever you connect your device to a new dev instance, you will need to authorise the device.  Unlock the device, tap the *USB debugging connected* notification, and then allow the connection shown in the authorisation dialogue that is shown.
 
-Support for other providers, and improvements for OSX (currently untested) are especially welcome.
+## Working on your project
+By default the project folder is ```project/```.  Check out your project into this folder and it will be mounted to ```/project``` in the guest VM.
 
-## See also
-- Albian Montaigu's [boot2docker-vagrant-template](https://github.com/AlbanMontaigu/boot2docker-vagrant-template)
+You can change these paths with ```host_project_path``` and ```guest_project_path```.
+
+The ```ionic``` command will automatically add a host volume to your project path when running the ionic2-up container.
+
+### Caveats
+The docker image used for the ionic 2 environment ([hotshotsxyz/ionic2-up](https://hub.docker.com/r/hotshotsxyz/ionic2-up/)) only has the latest stable Android platform and tools.  If you need older or newer, non-stable platforms then you can create your own docker images, optionally ```FROM hotshotsxyz/ionic2-up``` and add them to your docker-compose.yml.
+
+You can configure the docker-compose.yml to run with ```compose``` in your project or developer config.
