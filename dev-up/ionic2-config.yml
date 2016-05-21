@@ -5,3 +5,4 @@ forward_ports:
   35792: 35792
   5037: 5037
 bootstrap: dev-up/ionic2-up/aliases.sh
+compose: dev-up/ionic2-up/docker-compose.yml

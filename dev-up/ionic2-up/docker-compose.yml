@@ -1,0 +1,12 @@
+# Note that this compose will not result in any runnning services.  It simply
+# invokes a pull and build of the ionic2-up image so that it can be used and cached.
+version: '2'
+services:
+  ionic2-pull:
+    image: hotshotsxyz/ionic2-up:dev
+  ionic2-build:
+    build:
+      context: .
+    image: hotshotsxyz/ionic2-up:dev
+    depends_on:
+     - ionic2-pull

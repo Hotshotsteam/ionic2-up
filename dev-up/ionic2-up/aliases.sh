@@ -6,7 +6,7 @@ if [ ! -f /usr/bin/ionic ]; then
     -v /dev/bus/usb:/dev/bus/usb \
     -v=/vagrant/project:/project:rw \
     -p 8100:8100 -p 35792:35792 -p 5037:5037 \
-    ionic2-up:dev \
+    hotshotsxyz/ionic2-up:dev \
     ionic $@' \
   > /usr/bin/ionic
   chmod +x /usr/bin/ionic
@@ -18,7 +18,7 @@ if [ ! -f /usr/bin/adb ]; then
     -v /dev/bus/usb:/dev/bus/usb \
     -v=/vagrant/project:/project:rw \
     -p 8100:8100 -p 35792:35792 -p 5037:5037 \
-    ionic2-up:dev /bin/bash -c ". /root/.bashrc && \
+    hotshotsxyz/ionic2-up:dev /bin/bash -c ". /root/.bashrc && \
     adb $@"' \
   > /usr/bin/adb
   chmod +x /usr/bin/adb
