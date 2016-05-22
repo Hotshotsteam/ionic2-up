@@ -8,6 +8,9 @@ B2D_VERSION="1.11.0"
 # developer-up constants
 DEV_UP_PATH="dev-up/"
 
+# Whether the project folder was synced
+project_synced = false
+
 # Configuration
 # To override add vagrant/project-config.yml and vagrant/developer-config.yml
 dev_up_config = {
@@ -90,6 +93,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puts "host_project_path specified but no guest.  Check your project and developer config."
     else
       config.vm.synced_folder dev_up_config['host_project_path'], dev_up_config['guest_project_path'], create: true
+      project_synced = true
     end
   end
 
@@ -124,6 +128,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         index+=1
       end
+    end
+
+    if project_synced && (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate//srv/project", "1"]
     end
   end
 
