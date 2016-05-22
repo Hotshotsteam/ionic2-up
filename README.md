@@ -133,6 +133,9 @@ Before you can run on a local Android device you will need to add the device id 
 ## Working on your project
 By default ```project/``` is ignored by git, allowing you to add your project(s) here and sync them with the VM.  Simply use ```ionic``` as you normally would.  You can check out and work on multiple projects in the same ionic2-up environment.
 
+Note: Windows Users: As many npm modules use symlinks you will likely need to run 
+```vagrant up``` as an administrator.
+
 ### Caveats
 The docker image used for the ionic 2 environment ([hotshotsxyz/ionic2-up](https://hub.docker.com/r/hotshotsxyz/ionic2-up/)) only has the latest stable Android platform and tools.  If you need older or newer, non-stable platforms then you can create your own docker images, optionally ```FROM hotshotsxyz/ionic2-up``` and add them to your docker-compose.yml.
 
