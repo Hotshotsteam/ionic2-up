@@ -88,7 +88,7 @@ The default user and password is ```docker``` and ```tcuser``` but you will have
 The environment supports caching of docker images.  This allows images to be saved to and loaded from your host machine.  Enabling docker image caching greatly reduces the time to delete and restart the development VM.  To enable caching update ```docker_cache_path``` in your ```development-config.yml``` to point to an absolute path on your host machine.
 
 ### Using Ionic and adb
-The Ionic2 environment is provided by a docker image that is pulled / built on start up.  Useful aliases are also created to let you use ionic and adb as if they were on the VM rather than in the container.
+The Ionic2 environment is provided by a docker image that is pulled / built on start up.  Useful wrapper scripts are also created in ```/usr/bin``` to let you use ionic and adb as if they were on the VM rather than in the container.
 
 Simply use the ```ionic``` and ```adb``` commands as documented.
 
@@ -131,13 +131,11 @@ Before you can run on a local Android device you will need to add the device id 
 1. Whenever you connect your device to a new dev instance, you will need to authorise the device.  Unlock the device, tap the *USB debugging connected* notification, and then allow the connection shown in the authorisation dialogue that is shown.
 
 ## Working on your project
-By default the project folder is ```project/```.  Check out your project into this folder and it will be mounted to ```/project``` in the guest VM.
-
-You can change these paths with ```host_project_path``` and ```guest_project_path```.
-
-The ```ionic``` command will automatically add a host volume to your project path when running the ionic2-up container.
+By default ```project/``` is ignored by git, allowing you to add your project(s) here and sync them with the VM.  Simply use ```ionic``` as you normally would.  You can check out and work on multiple projects in the same ionic2-up environment.
 
 ### Caveats
 The docker image used for the ionic 2 environment ([hotshotsxyz/ionic2-up](https://hub.docker.com/r/hotshotsxyz/ionic2-up/)) only has the latest stable Android platform and tools.  If you need older or newer, non-stable platforms then you can create your own docker images, optionally ```FROM hotshotsxyz/ionic2-up``` and add them to your docker-compose.yml.
 
 You can configure the docker-compose.yml to run with ```compose``` in your project or developer config.
+
+No Xcode, as Xcode requires OSX.  It may still be convenient to use ionic2-up and ionic to prepare the Xcode project and then run a simple build on an OSX machine but I haven't tried this yet.  I will update the readme when I have.
