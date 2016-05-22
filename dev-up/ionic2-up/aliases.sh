@@ -25,3 +25,14 @@ if [ ! -f /usr/bin/adb ]; then
   > /usr/bin/adb
   chmod +x /usr/bin/adb
 fi
+
+if [ ! -f /usr/bin/npm ]; then
+  echo '#!/bin/sh' > /usr/bin/npm
+  echo "docker run --rm -ti --privileged \
+    -v=\$PWD:/project:rw \
+    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
+    hotshotsxyz/ionic2-up:dev /bin/bash -c \". /root/.bashrc && \
+    npm \$@\"" \
+  > /usr/bin/npm
+  chmod +x /usr/bin/npm
+fi
