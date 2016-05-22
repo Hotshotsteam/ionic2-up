@@ -18,8 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g ionic@2.0.0-beta.25 cordova
-
 RUN mkdir $HOME/install && \
     ANDROID_HOME=$HOME/android && \
     SDK='https://dl.google.com/android/repository' && \
@@ -46,6 +44,10 @@ RUN mkdir $HOME/install && \
       >> $HOME/.bashrc
 
 ADD ./70-android.rules /etc/udev/rules.d/70-android.rules
+
+RUN npm install cordova
+
+RUN npm install -g ionic@2.0.0-beta.25
 
 WORKDIR /project
 
