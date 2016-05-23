@@ -127,11 +127,15 @@ Before you can run on a local Android device you will need to add the device id 
 1. Update ```usb_devices``` in your ```developer-config.yml``` (see above) with the device id.
 1. Reprovision the VM with either:
 ```vagrant up --provision``` or ```vagrant destroy``` and ```vagrant up```
-1. Reconnect the device and check it's working in the VM with ```adb devices```.  If the device isn't shown, you may need to restart the adb daemon with ```adb kill-server && adb start-server```.
+1. Reconnect the device and check it's working in the VM with ```adb devices```.
 1. Whenever you connect your device to a new dev instance, you will need to authorise the device.  Unlock the device, tap the *USB debugging connected* notification, and then allow the connection shown in the authorisation dialogue that is shown.
 
 ## Working on your project
 By default ```project/``` is ignored by git, allowing you to add your project(s) here and sync them with the VM.  Simply use ```ionic``` as you normally would.  You can check out and work on multiple projects in the same ionic2-up environment.
+
+There is also an ```ionic-up``` command which will run the ionic2-up container and
+give you the shell.  This may be useful for several workflows that are not covered by
+the command wrappers.
 
 Note: Windows Users: As many npm modules use symlinks you will likely need to run 
 ```vagrant up``` as an administrator.
