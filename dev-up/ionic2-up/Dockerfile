@@ -45,6 +45,10 @@ RUN mkdir $HOME/install && \
 
 ADD ./70-android.rules /etc/udev/rules.d/70-android.rules
 
+ENV ANDROID_HOME $HOME/android
+
+ENV PATH $ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
+
 RUN npm install cordova
 
 RUN npm install -g ionic@2.0.0-beta.25
