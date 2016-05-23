@@ -20,6 +20,19 @@ if [ ! -f /usr/bin/ionic ]; then
   chmod +x /usr/bin/ionic
 fi
 
+if [ ! -f /usr/bin/ionic-up ]; then
+  echo '#!/bin/sh' > /usr/bin/ionic
+  echo "docker run -ti --privileged \
+    -v /dev/bus/usb:/dev/bus/usb \
+    -v /vagrant/dev-up/temp/.android:/root/.android:rw \
+    -v /vagrant/dev-up/temp/.gradle:/root/.gradle:rw \
+    -v=\$PWD:/project:rw \
+    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
+    hotshotsxyz/ionic2-up:dev" \
+  > /usr/bin/ionic-up
+  chmod +x /usr/bin/ionic-up
+fi
+
 if [ ! -f /usr/bin/adb ]; then
   echo '#!/bin/sh' > /usr/bin/adb
   echo "docker run --rm -ti --privileged \
