@@ -49,7 +49,7 @@ ENV ANDROID_HOME $HOME/android
 
 ENV PATH $ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
 
-RUN npm install cordova
+RUN npm install -g cordova
 
 RUN npm install -g ionic@2.0.0-beta.25
 
