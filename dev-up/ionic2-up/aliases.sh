@@ -21,13 +21,13 @@ if [ ! -f /usr/bin/ionic ]; then
 fi
 
 if [ ! -f /usr/bin/ionic-up ]; then
-  echo '#!/bin/sh' > /usr/bin/ionic
+  echo '#!/bin/sh' > /usr/bin/ionic-up
   echo "docker run -ti --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v /vagrant/dev-up/temp/.android:/root/.android:rw \
     -v /vagrant/dev-up/temp/.gradle:/root/.gradle:rw \
     -v=\$PWD:/project:rw \
-    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
+    -p 8100:8100 -p 35729:35729 -p 5037:5037 -p 3000:3000 -p 3001:3001 \
     hotshotsxyz/ionic2-up:dev" \
   > /usr/bin/ionic-up
   chmod +x /usr/bin/ionic-up
@@ -50,7 +50,7 @@ if [ ! -f /usr/bin/npm ]; then
   echo '#!/bin/sh' > /usr/bin/npm
   echo "docker run --rm -ti --privileged \
     -v=\$PWD:/project:rw \
-    -p 8100:8100 -p 35729:35729 -p 5037:5037 \
+    -p 3000:3000 -p 3001:3001 \
     hotshotsxyz/ionic2-up:dev /bin/bash -c \". /root/.bashrc && \
     npm \$@\"" \
   > /usr/bin/npm
