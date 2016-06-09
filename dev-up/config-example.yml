@@ -69,3 +69,13 @@ tce_extensions:
 # running boxes.
 usb_devices:
   18d1
+
+# File System Events
+# Specify a path on the guest to a file path log file.
+# This will trigger file system change events in the guest for the logged file
+# paths, allowing watchers to see changes without polling.
+# You must set up something on the host to append the relative paths of the changed
+# files to the specified log file.
+# See https://github.com/Hotshotsteam/tailmon for more information.
+fs_notify_log:
+  /project/.tailmon
