@@ -24,6 +24,7 @@ dev_up_config = {
   'tce_extensions'     => false,
   'host_project_path'  => 'project',
   'guest_project_path' => '/project',
+  'fs_notify_log'      => false,
 
   # Developer config
   'ssh_port'           => false,
@@ -33,7 +34,7 @@ dev_up_config = {
   'bridged_ip'         => false,
   'insecure_key'       => false,
   'docker_cache_path'  => false,
-  'usb_devices'        => false
+  'usb_devices'        => false,
 }
 
 # Load configs specified by configs.yml
@@ -165,6 +166,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Optional bootstrap
   if dev_up_config['bootstrap']
     config.vm.provision :shell, :path => "#{dev_up_config['bootstrap']}", run: "always", name: "Project Bootstrap"
+  end
+
+  # Forward fs events from file name log
+  if dev_up_config['fs_notify_log']
+    config.vm.provision :shell, :path => DEV_UP_PATH + "tailmon-up.sh", name: "FS Event Forwarding", run: "always", args: dev_up_config['fs_notify_log']
   end
 
   # Save docker cache
