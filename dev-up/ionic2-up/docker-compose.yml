@@ -1,4 +1,4 @@
-# Note that this compose will not result in any runnning services.  It simply
+# Note that this compose will not result in any running services.  It simply
 # invokes a pull and build of the ionic2-up image so that it can be used and cached.
 version: '2'
 services:
