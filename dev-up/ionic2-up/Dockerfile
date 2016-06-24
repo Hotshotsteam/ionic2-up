@@ -50,7 +50,8 @@ ENV ANDROID_HOME /root/android
 ENV PATH $ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
 
 RUN npm install -g cordova
-
+RUN npm install -g typings
+RUN npm install -g tsc
 RUN npm install -g ionic@2.0.0-beta.30
 
 WORKDIR /project
