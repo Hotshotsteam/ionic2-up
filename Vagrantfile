@@ -160,7 +160,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Optional project compose
   if dev_up_config['compose']
-    config.vm.provision :shell, :path => DEV_UP_PATH + "compose.sh", name: "Docker Compose", run: "always", args: "/vagrant/#{dev_up_config['compose']}"
+    if !dev_up_config['compose'].kind_of?(Array)
+      dev_up_config['compose'] = [dev_up_config['compose']]
+    end
+
+    dev_up_config['compose'].each do |compose_file|
+      config.vm.provision :shell, :path => DEV_UP_PATH + "compose.sh", name: "Docker Compose", run: "always", args: "/vagrant/#{compose_file}"
+    end
   end
 
   # Optional bootstrap
