@@ -21,7 +21,6 @@ DEBOUNCE_TIME=5
 if [ ! -z $4 ]; then
   DEBOUNCE_TIME=$4
 fi
-echo $DEBOUNCE_TIME
 
 if [ ! -f $TAIL_FILE ]; then
     touch $TAIL_FILE
