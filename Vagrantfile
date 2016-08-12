@@ -171,12 +171,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Optional bootstrap
   if dev_up_config['bootstrap']
-    config.vm.provision :shell, :path => "#{dev_up_config['bootstrap']}", run: "always", name: "Project Bootstrap"
+    if !dev_up_config['bootstrap'].kind_of?(Array)
+      dev_up_config['bootstrap'] = [dev_up_config['bootstrap']]
+    end
+
+    dev_up_config['bootstrap'].each do |bootstrap|
+      config.vm.provision :shell, :path => "#{bootstrap}", run: "always", name: "Project Bootstrap"
+    end
   end
 
   # Forward fs events from file name log
   if dev_up_config['fs_notify_log']
-    config.vm.provision :shell, :path => DEV_UP_PATH + "tailmon-up.sh", name: "FS Event Forwarding", run: "always", args: dev_up_config['fs_notify_log']
+    args = [dev_up_config['fs_notify_log']];
+    if dev_up_config['fs_trigger_cmd']
+      args.push(dev_up_config['fs_trigger_cmd'])
+      args.push(dev_up_config['fs_debounce_secs'])
+    end
+
+    config.vm.provision :shell, :path => DEV_UP_PATH + "tailmon-up.sh", name: "FS Event Forwarding", run: "always", args: args
   end
 
   # Save docker cache
