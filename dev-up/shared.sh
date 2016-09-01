@@ -30,6 +30,13 @@ wait_on () {
   return 0
 }
 
+start_docker() {
+  /etc/init.d/docker start &>/dev/null || error_exit "Could not start docker"
+  if ! wait_docker; then
+    echo error_exit "Could not start docker..."
+  fi
+}
+
 wait_docker() {
   wait_on 'pidof docker'
   wait_on "docker -H unix://$1 ps -q"
