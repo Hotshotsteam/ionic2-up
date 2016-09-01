@@ -32,5 +32,4 @@ docker images | awk '{print $1 ":" $2}' | grep 'hotshotsxyz\/tailmon:dev' &>/dev
   docker build -f /vagrant/dev-up/tailmon/tailmon.Dockerfile -t hotshotsxyz/tailmon:dev /vagrant/dev-up/tailmon
 
 # Start tailmon
-echo $FILE_NAME $2 $3
 docker run --name="tailmon" -d -v=$PROJECT_PATH:/project:rw hotshotsxyz\/tailmon:dev tailmon /project $FILE_NAME "$2" $3
